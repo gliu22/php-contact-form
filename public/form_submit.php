@@ -19,15 +19,33 @@ function saveData($name, $email, $phone, $message)
     $servername = "localhost";
     $username = "ken";
     $password = "So@5576550";
+    $dbname = "test_db";
 
     // Create connection
-    $conn = new mysqli($servername, $username, $password);
-
+    $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+        return("Connection failed: " . $conn->connect_error);
     }
-    return "Connected successfully";
+
+    $sql = "CREATE TABLE message_log IF NOT EXISTS(
+            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(50) NOT NULL,
+            email VARCHAR(50),
+            phone VARCHAR(20),
+            message TEXT,
+            created_by TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            )";
+
+    if ($conn->query($sql) === TRUE) {
+        $sql2 = "INSERT INTO message_log (name, email, phone, message) VALUES('".$name."','".$email."','".$phone."','".$message."')";
+        $conn->query($sql2);
+    } else {
+        return "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    // close mysql connection
+    $conn->close();
 }
 
 if($_POST){
