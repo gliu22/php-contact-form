@@ -1,0 +1,8 @@
+input.error,
+select.error,
+textarea.error {
+  outline: none;
+  border-color: red;
+  border-width: 1px;
+  border-style: solid;
+}
