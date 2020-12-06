@@ -6,13 +6,13 @@ function saveData($Message)
     // ***
     // Please update database connection before test form submission
     // ***
-    $servername = "localhost";
+    $servername = "127.0.0.1";
     $username = "root";
-    $password = "So@5576550";
+    $password = "";
     $dbname = "test_db";
     // *** !!!important
 
-    // Create connection
+    // Create connection ***!!! please update if needed
     $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {

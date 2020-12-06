@@ -133,7 +133,7 @@ class Message{
         }
     }
 
-    // unable to test this part in local machine 
+    // unable to test this part in local machine
     public function sendEmail($recipient = "guy-smiley@example.com")
     {
         $this->setRecipient($recipient);
