@@ -1,3 +1,5 @@
+# !!!Please update databse connection and databse credentials before live test
+
 # Dealer Inspire PHP Code Challenge
 
 Welcome to the Dealer Inspire PHP Code challenge. 
