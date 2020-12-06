@@ -28,7 +28,7 @@ function saveData($name, $email, $phone, $message)
         return("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "CREATE TABLE message_log IF NOT EXISTS(
+    $sql = "CREATE TABLE IF NOT EXISTS message_log(
             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(50) NOT NULL,
             email VARCHAR(50),
