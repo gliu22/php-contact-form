@@ -1,7 +1,6 @@
 <?php
 
-require_once "app/Models/Message.php";
-
+require_once('app/Message.php');
 function saveData($Message)
 {
     // ***
@@ -10,7 +9,7 @@ function saveData($Message)
     $servername = "localhost";
     $username = "root";
     $password = "So@5576550";
-    $dbname = "test_db";
+    $dbname = "test";
     // ***
 
     // Create connection
@@ -25,7 +24,7 @@ function saveData($Message)
 }
 
 if($_POST){
-    $Message = new Message();
+    $Message = new App\Message();
 
     // Set customer name
     if(isset($_POST['name'])) {
