@@ -1,22 +1,3 @@
-//Get all the inputs...
-const inputs = document.querySelectorAll("input, select, textarea");
-// Loop through them...
-for (let input of inputs) {
-  // Just before submit, the invalid event will fire, let's apply our class there.
-  input.addEventListener(
-    "invalid",
-    (event) => {
-      input.classList.add("error");
-    },
-    false
-  );
-
-  // Optional: Check validity onblur
-  input.addEventListener("blur", (event) => {
-    input.checkValidity();
-  });
-}
-
 const input_name = document.querySelector('input[name="name"]');
 const input_email = document.querySelector('input[name="email"]');
 
@@ -28,6 +9,7 @@ input_name.addEventListener("invalid", function (event) {
       "Name format incorrect. Special characters and numbers not allowed."
     );
   }
+  event.target.setAttribute("aria-invalid", "true");
 });
 
 input_email.addEventListener("invalid", function (event) {
@@ -36,11 +18,15 @@ input_email.addEventListener("invalid", function (event) {
   } else if (event.target.validity.patternMismatch) {
     event.target.setCustomValidity("Email format incorrect.");
   }
+  event.target.setAttribute("aria-invalid", "true");
 });
 
 input_name.addEventListener("change", function (event) {
   event.target.setCustomValidity("");
+  event.target.removeAttribute("aria-invalid");
 });
+
 input_email.addEventListener("change", function (event) {
   event.target.setCustomValidity("");
+  event.target.removeAttribute("aria-invalid");
 });
