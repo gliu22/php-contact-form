@@ -1,25 +1,38 @@
 <?php
 function sendEmail($recipient = "guy-smiley@example.com", $name, $email, $email_body)
 {
+    // build header of email
     $headers  = 'MIME-Version: 1.0' . "\r\n"
     .'Content-type: text/html; charset=utf-8' . "\r\n"
     .'From: ' . $email . "\r\n";
 
-    $email_title = 'Customer Message From '.$name;
-      
-    if(mail($recipient, $email_title, $email_body, $headers)) {
+    // build title of email
+    $email_subject = 'Customer Message From '.$name;
+    
+    // send email
+    if(mail($recipient, $email_subject, $email_body, $headers)) {
         return "<p>Thank you for contacting Guy Smiley , $name.</p>";
     } else {
         return '<p>We are sorry but the email did not go through.</p>';
     }
+
+    // Test email output
+    // var_dump($headers);
+    // var_dump($email_body);
+    // var_dump($recipient);
+    // var_dump($email_subject);
 }
 
 function saveData($name, $email, $phone, $message)
 {
+    // ***
+    // Please update database connection before test
+    // ***
     $servername = "localhost";
-    $username = "ken";
+    $username = "root";
     $password = "So@5576550";
-    $dbname = "test_db";
+    $dbname = "test";
+    // ***
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -28,6 +41,7 @@ function saveData($name, $email, $phone, $message)
         return("Connection failed: " . $conn->connect_error);
     }
 
+    // thie query also included in public folder
     $sql = "CREATE TABLE IF NOT EXISTS message_log(
             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(50) NOT NULL,
@@ -97,10 +111,6 @@ if($_POST){
 
     $return_message2 = saveData($name, $email, $phone, $message);
     echo $return_message2;
-    // Test email output
-    //var_dump($email_body);
-    //var_dump($recipient);
-    //var_dump($email_title);
 }
 
 echo '<div><a href="index.html">Back to last page</a></div>';
