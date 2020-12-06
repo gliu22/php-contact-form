@@ -24,7 +24,7 @@ class Message{
         $this->recipient = "guy-smiley@example.com";
         $this->email_body = '<div>';
         $this->phone = 'N/A';
-        $this->content = 'N/A';
+        $this->content = '';
         $this->email = 'N/A';
         $this->name = 'N/A';
     }
@@ -62,14 +62,22 @@ class Message{
     public function setName($name)
     {
         $this->name = filter_var($name, FILTER_SANITIZE_STRING);
+        if(strlen($this->getName()) == 0){
+            return false;
+        }
         $this->setEmailBody('Customer Name', $this->getName());
+        return true;
     }
 
     public function setEmail($email)
     {
         $email = str_replace(array("\r", "\n", "%0a", "%0d"), '', $email);
         $this->email = filter_var($email, FILTER_VALIDATE_EMAIL);
+        if($this->getEmail() == false){
+            return false;
+        }
         $this->setEmailBody('Customer Email', $this->getEmail());
+        return true;
     }
 
     public function setPhone($phone)
@@ -100,6 +108,11 @@ class Message{
         return $this->email_body."</div>";
     }
 
+    // have test plan with 
+    // function setUp() { $this->db->exec("BEGIN"); }
+    // function tearDown() { $this->db->exec("ROLLBACK"); }
+    // but will failed phpunit command if does not change database configuration
+    // so leave it for now 
     public function saveMessage($conn)
     {
         // thie query also included in public folder
@@ -120,6 +133,7 @@ class Message{
         }
     }
 
+    // unable to test this part in local machine 
     public function sendEmail($recipient = "guy-smiley@example.com")
     {
         $this->setRecipient($recipient);

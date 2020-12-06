@@ -4,13 +4,13 @@ require_once('app/Message.php');
 function saveData($Message)
 {
     // ***
-    // Please update database connection before test
+    // Please update database connection before test form submission
     // ***
     $servername = "localhost";
     $username = "root";
     $password = "So@5576550";
-    $dbname = "test";
-    // ***
+    $dbname = "test_db";
+    // *** !!!important
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -26,14 +26,21 @@ function saveData($Message)
 if($_POST){
     $Message = new App\Message();
 
+    echo '<div><a href="index.html">Back to last page</a></div>';
     // Set customer name
     if(isset($_POST['name'])) {
-        $Message->setName($_POST['name']);
+        if(!$Message->setName($_POST['name'])){
+            echo '<div style="color:red">Name is invalid! Send Email Failed.</div>';
+            exit();
+        }
     }
 
     // Set customer email
     if(isset($_POST['email'])) {
-        $Message->setEmail($_POST['email']);
+        if(!$Message->setEmail($_POST['email'])){
+            echo '<div style="color:red">Email is invalid! Send Eamil Failed.</div>';
+            exit();
+        }
     }
 
     // Set customer phone
@@ -46,10 +53,10 @@ if($_POST){
         $Message->setMessage($_POST['message']);
     }
 
+    // unable to test this part in local machine
     echo $Message->sendEmail();
 
     echo saveData($Message);
     
 }
 
-echo '<div><a href="index.html">Back to last page</a></div>';
